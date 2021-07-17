@@ -15,7 +15,9 @@ class PaymentServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        $this->publishes([
+            __DIR__.'/../../config/payment.php' => config_path('payment.php'),
+        ], 'config');
     }
 
     /**
@@ -25,6 +27,10 @@ class PaymentServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(
+            __DIR__.'/../../config/payment.php', 'payment'
+        );
+
         $this->app->singleton('payment',function (){
             return new Payment();
         });
