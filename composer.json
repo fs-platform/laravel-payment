@@ -1,0 +1,54 @@
+{
+  "name": "smbear/payment",
+  "description": "laravel payment",
+  "keywords": [
+    "laravel",
+    "payment"
+  ],
+  "authors": [
+    {
+      "name": "smile",
+      "email": "ywjmylove@163.com",
+	  "role": "Developer"
+    }
+  ],
+  "homepage": "https://github.com/fs-platform/laravel-payment",
+  "time": "2021-6-25",
+  "type": "library",
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.3",
+    "illuminate/support":"^8.0",
+    "ingenico-epayments/connect-sdk-php": "^6.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0",
+    "orchestra/testbench": "^6.0",
+    "phpstan/phpstan": "^0.12"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Smbear\\Payment\\": "src/"
+    },
+    "files": [
+      "helper/function.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Smbear\\Payment\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Smbear\\Payment\\Providers\\PaymentServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit -c ./phpunit.xml --colors=always",
+    "analysis": "vendor/bin/phpstan analyse"
+  }
+}
