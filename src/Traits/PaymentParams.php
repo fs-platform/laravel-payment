@@ -270,7 +270,7 @@ trait PaymentParams
             $hostedCheckoutSpecificInput = new HostedCheckoutSpecificInput();
 
             $hostedCheckoutSpecificInput->locale = $local;
-            $hostedCheckoutSpecificInput->variant = config('payment.variant');
+            $hostedCheckoutSpecificInput->variant = config('payment.'.$this->environment.'.variant');
 
             $hostedCheckoutSpecificInput->paymentProductFilters = new PaymentProductFiltersHostedCheckout();
             $hostedCheckoutSpecificInput->paymentProductFilters->restrictTo = new PaymentProductFilter();
