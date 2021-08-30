@@ -109,7 +109,8 @@ class PaymentStatusService
                         'paymentId' => $response->createdPaymentOutput->payment->id,
                         'code'      => $payment->statusOutput->statusCode ?? 0,
                         'message'   => $statusCategory,
-                        'response'  => json_encode($response,JSON_FORCE_OBJECT)
+                        'response'  => json_encode($response,JSON_FORCE_OBJECT),
+                        'outMessage'=> $this->getOutMessage($payment->statusOutput->statusCode)
                     ];
                 }
             }
