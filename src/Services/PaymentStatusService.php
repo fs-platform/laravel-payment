@@ -83,7 +83,7 @@ class PaymentStatusService
                         'status'   => 'success',
                         'paymentId'=> $response->createdPaymentOutput->payment->id,
                         'code'     => $payment->statusOutput->statusCode,
-                        'message'  => $payment->status,
+                        'message'  => 'successful',
                         'response' => json_encode($response,JSON_FORCE_OBJECT)
                     ];
                 } else if ($statusCategory == 'PENDING_MERCHANT'){
