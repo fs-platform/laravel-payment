@@ -108,19 +108,19 @@ trait PaymentParams
     /**
      * @Notes:设置购物金额和货币类型
      *
-     * @param int $amount
+     * @param $amount
      * @param string $currencyCode
      * @return $this
      * @Author: smile
      * @Date: 2021/6/26
      * @Time: 18:11
      */
-    public function setAmountMoney(int $amount,string $currencyCode) : self
+    public function setAmountMoney($amount,string $currencyCode) : self
     {
         if (is_null($this->amountOfMoney)){
             $amountOfMoney = new AmountOfMoney();
 
-            $amountOfMoney->amount = (int) $amount;
+            $amountOfMoney->amount = strval($amount);
             $amountOfMoney->currencyCode = $currencyCode;
 
             $this->amountOfMoney = $amountOfMoney;
