@@ -3,6 +3,7 @@
 namespace Smbear\Payment\Services;
 
 use Illuminate\Support\Facades\Log;
+use Smbear\Payment\Traits\PaymentException;
 use Smbear\Payment\Traits\PaymentConnection;
 use Ingenico\Connect\Sdk\Domain\Payment\Definitions\Order;
 use Ingenico\Connect\Sdk\Domain\Payment\Definitions\Shipping;
@@ -11,7 +12,7 @@ use Ingenico\Connect\Sdk\Domain\Hostedcheckout\CreateHostedCheckoutRequest;
 
 class PaymentCheckoutService
 {
-    use PaymentConnection;
+    use PaymentConnection ,PaymentException;
 
     /**
      * @Notes:payment 获取到checkout 页面数据
@@ -75,12 +76,14 @@ class PaymentCheckoutService
 
             return payment_return_error('error');
         }catch (\Exception $exception){
+            $message = $this->getExceptionMessage($exception);
+
             Log::channel(config('payment.channel') ?: 'payment')
-                ->emergency('初始化异常:'.$exception->getMessage());
+                ->emergency('初始化异常:'.$message);
 
             report($exception);
 
-            return payment_return_error($exception->getMessage());
+            return payment_return_error($message);
         }
     }
 }

@@ -5,6 +5,7 @@ namespace Smbear\Payment\Services;
 use Illuminate\Support\Facades\Log;
 use Smbear\Payment\Enums\PaymentEnums;
 use Smbear\Payment\Exceptions\ApiException;
+use Smbear\Payment\Traits\PaymentException;
 use Smbear\Payment\Exceptions\BaseException;
 use Smbear\Payment\Traits\PaymentConnection;
 use Smbear\Payment\Exceptions\TokenException;
@@ -16,7 +17,7 @@ use Ingenico\Connect\Sdk\Domain\Payment\Definitions\ApprovePaymentNonSepaDirectD
 
 class PaymentStatusService
 {
-    use PaymentConnection;
+    use PaymentConnection ,PaymentException;
 
     /**
      * @var string $local 语种
@@ -117,14 +118,16 @@ class PaymentStatusService
 
             return $this->invalidStatusDeal($response);
         }catch (\Exception $exception){
+            $message = $this->getExceptionMessage($exception);
+
             if (!$exception instanceof BaseException) {
                 Log::channel(config('payment.channel') ?: 'payment')
-                    ->emergency('获取订单状态异常:'.$exception->getMessage());
+                    ->emergency('获取订单状态异常:'.$message);
 
                 report($exception);
             }
 
-            return payment_return_error($exception->getMessage());
+            return payment_return_error($message);
         }
     }
 
@@ -212,14 +215,16 @@ class PaymentStatusService
                 ];
             }
         }catch (\Exception $exception){
+            $message = $this->getExceptionMessage($exception);
+
             if (!$exception instanceof BaseException) {
                 Log::channel(config('payment.channel') ?: 'payment')
-                    ->emergency('自动审核 异常:'.$exception->getMessage());
+                    ->emergency('自动审核 异常:'.$message);
 
                 report($exception);
             }
 
-            throw new ApiException($exception->getMessage());
+            throw new ApiException($message);
         }
     }
 
@@ -282,14 +287,16 @@ class PaymentStatusService
                 ];
             }
         }catch (\Exception $exception){
+            $message = $this->getExceptionMessage($exception);
+
             if (!$exception instanceof BaseException) {
                 Log::channel(config('payment.channel') ?: 'payment')
-                    ->emergency('检索付款明细 异常:'.$exception->getMessage());
+                    ->emergency('检索付款明细 异常:'.$message);
 
                 report($exception);
             }
 
-            throw new ApiException($exception->getMessage());
+            throw new ApiException($message);
         }
     }
 
@@ -317,12 +324,14 @@ class PaymentStatusService
 
             return $response->token;
         }catch (\Exception $exception){
+            $message = $this->getExceptionMessage($exception);
+
             Log::channel(config('payment.channel') ?: 'payment')
-                ->emergency('获取token 异常:'.$exception->getMessage());
+                ->emergency('获取token 异常:'.$message);
 
             report($exception);
 
-            throw new ApiException($exception->getMessage());
+            throw new ApiException($message);
         }
     }
 
