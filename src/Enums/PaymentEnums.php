@@ -12,16 +12,16 @@ class PaymentEnums
         50 => 'The payment request and consumer have been forwarded to the payment pages of the bank',
         55 => 'The consumer received all payment details to initiate the transaction the consumer must go to the (bank) office to initiate the payment',
         60 => 'The consumer is not enrolled for 3D Secure authentications',
-        65 => 'The consumer is at an office to initiate a transaction 
+        65 => 'The consumer is at an office to initiate a transaction
 				The status is used when the supplier polls the WebCollect database to verify if a payment on an order is (still) possible',
         70 => 'The status of the payment is in doubt at the bank',
-        100 => 'WebCollect rejected the payment instruction',
+        100 => 'WebCollect rejected the payment instruction.You can contact your card issuing bank or PP customer service to get the specific reason for the transaction failure.',
         120 => 'The bank rejected the payment',
         125 => 'The consumer cancelled the payment while on the bank payment page',
         130 => 'The payment has failed',
         140 => 'The payment was not completed within the given set time limit by the consumer and is expired<BR/>The payment has failed',
         150 => 'WebCollect did not receive information regarding the outcome of the payment at the bank',
-        160 => 'The transaction had been rejected for reasons of suspected fraud',
+        160 => 'The transaction was rejected due to risk control by the credit card company.It is recommended that you temporarily stop payment to avoid violating the new risk control regulations and try another card or payment method.',
         170 => 'The authorization is expired because no explicit settlement request was received in time',
         172 => 'The enrolment period was pending for too long',
         175 => 'The validation period was pending for too long',
@@ -41,7 +41,10 @@ class PaymentEnums
 			Authorization is not possible',
         350 => 'The cardholder was successfully authenticated <br />
 			Authorization is not possible',
-        400 => 'The consumer or WebCollect has revised the payment (with another payment product)',
+        400 => '<p style="margin-bottom:8px">Sorry, your request is declined. Please check the following reasons and try again, or choose another payment method.</p>
+                <p>1. Total amount exceeds limit (€ 15,000) ;</p>
+                <p>2. Card does not support the currency;</p>
+                <p>3. Network error, please try later.</p>',
         403 => 'You are not allowed to access the service or account or your API authentication failed.',
         500 => 'Payment was unsuccessful <br />
 			This is the final status update for this transaction',

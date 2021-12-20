@@ -3,6 +3,7 @@
 namespace Smbear\Payment\Services;
 
 use Illuminate\Support\Facades\Log;
+use Smbear\Payment\Enums\PaymentEnums;
 use Smbear\Payment\Traits\PaymentException;
 use Smbear\Payment\Traits\PaymentConnection;
 use Ingenico\Connect\Sdk\Domain\Payment\Definitions\Order;
@@ -76,7 +77,17 @@ class PaymentCheckoutService
 
             return payment_return_error('error');
         }catch (\Exception $exception){
-            $message = $this->getExceptionMessage($exception);
+            $message = '';
+
+            if (method_exists($exception,'getHttpStatusCode')) {
+                $httpCode = $exception->getHttpStatusCode();
+
+                $message = PaymentEnums::ERRORS[$httpCode] ?? '';
+            }
+
+            if (empty($message)) {
+                $message = $this->getExceptionMessage($exception);
+            }
 
             Log::channel(config('payment.channel') ?: 'payment')
                 ->emergency('初始化异常:'.$message);
