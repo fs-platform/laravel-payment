@@ -24,6 +24,8 @@ return [
 
         'merchant_id_two'     => env('PAYMENT_SANDBOX_MERCHANT_ID_TWO',''),
 
+        'merchant_id_three'   => env('PAYMENT_SANDBOX_MERCHANT_ID_THREE',''),
+
         'show_result_page'    => env('PAYMENT_SANDBOX_SHOW_RESULT_PAGE',''),
 
         'return_cancel_state' => env('PAYMENT_SANDBOX_RETURN_CANCEL_STATE',''),
@@ -49,6 +51,8 @@ return [
         'merchant_id_one'     => env('PAYMENT_PRODUCTION_MERCHANT_ID_ONE',''),
 
         'merchant_id_two'     => env('PAYMENT_PRODUCTION_MERCHANT_ID_TWO',''),
+
+        'merchant_id_three'   => env('PAYMENT_SANDBOX_MERCHANT_ID_THREE',''),
 
         'show_result_page'    => env('PAYMENT_PRODUCTION_SHOW_RESULT_PAGE',''),
 

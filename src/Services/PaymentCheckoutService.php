@@ -9,7 +9,10 @@ use Smbear\Payment\Traits\PaymentConnection;
 use Ingenico\Connect\Sdk\Domain\Payment\Definitions\Order;
 use Ingenico\Connect\Sdk\Domain\Payment\Definitions\Shipping;
 use Ingenico\Connect\Sdk\Domain\Payment\Definitions\Customer;
+use Ingenico\Connect\Sdk\Domain\Payment\Definitions\ThreeDSecure;
+use Ingenico\Connect\Sdk\Domain\Payment\Definitions\RedirectionData;
 use Ingenico\Connect\Sdk\Domain\Hostedcheckout\CreateHostedCheckoutRequest;
+use Ingenico\Connect\Sdk\Domain\Payment\Definitions\CardPaymentMethodSpecificInput;
 
 class PaymentCheckoutService
 {
@@ -22,12 +25,13 @@ class PaymentCheckoutService
      * @param array $config
      * @param array $parameter
      * @param int $merchantId
+     * @param bool $threeDSecure
      * @return array
      * @Author: smile
      * @Date: 2021/6/28
      * @Time: 18:31
      */
-    public function checkout(int $customerId,array $config,array $parameter,int $merchantId): array
+    public function checkout(int $customerId,array $config,array $parameter,int $merchantId,bool $threeDSecure): array
     {
         try{
             $customer = new Customer();
@@ -54,6 +58,22 @@ class PaymentCheckoutService
             $body->hostedCheckoutSpecificInput->returnUrl         = $config['return_url'];
             $body->hostedCheckoutSpecificInput->showResultPage    = (bool) $config['show_result_page'];
             $body->hostedCheckoutSpecificInput->returnCancelState = (bool) $config['return_cancel_state'];
+
+            //验证是否开启3ds认证
+            if ($threeDSecure) {
+                $threeDSecure = new ThreeDSecure();
+                $threeDSecure->authenticationAmount = $parameter['amountOfMoney'];
+                $threeDSecure->authenticationFlow = "browser";
+                $threeDSecure->challengeCanvasSize = "600x400";
+                $threeDSecure->challengeIndicator = "no-challenge-requested";
+                $threeDSecure->exemptionRequest = "low-value";
+                $threeDSecure->skipAuthentication = false;
+
+                $cardPaymentMethodSpecificInput = new CardPaymentMethodSpecificInput();
+                $cardPaymentMethodSpecificInput->threeDSecure = $threeDSecure;
+
+                $body->cardPaymentMethodSpecificInput = $cardPaymentMethodSpecificInput;
+            }
 
             $response = $this->client($config)
                 ->merchant($merchantId)

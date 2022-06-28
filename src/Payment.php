@@ -30,6 +30,11 @@ class Payment
     public $userId;
 
     /**
+     * @var bool $threeDSecure
+     */
+    public $threeDSecure;
+
+    /**
      * @var int $merchantId 商家id
      */
     public $merchantId;
@@ -93,6 +98,22 @@ class Payment
         }
 
         $this->local = $local;
+
+        return $this;
+    }
+
+    /**
+     * @Notes:设置3ds认证环境
+     * @Notes true 表示开启3ds支付 false 表示不开启3ds支付
+     * @param bool $threeDSecure
+     * @return $this
+     * @Author: smile
+     * @Date: 2021/6/29
+     * @Time: 11:14
+     */
+    public function setThreeDSecure(bool $threeDSecure) : self
+    {
+        $this->threeDSecure = $threeDSecure;
 
         return $this;
     }
@@ -180,13 +201,15 @@ class Payment
             'return_url',
             'url_domain',
             'merchant_id_one',
-            'merchant_id_two'
+            'merchant_id_two',
+            'merchant_id_three'
         ]);
 
         $this->checkMethod([
             'setLocal'              => 'local',
             'setPersonalName'       => 'person',
             'setUserId'             => 'userId',
+            'setThreeDSecure'       => 'threeDSecure',
             'setAddress'            => 'address',
             'getMerchantId'         => 'merchantId',
             'setAmountMoney'        => 'amountOfMoney',
@@ -205,6 +228,7 @@ class Payment
                 $this->config,
                 $this->getPaymentParams(),
                 $this->merchantId,
+                $this->threeDSecure
             );
     }
 
@@ -227,7 +251,8 @@ class Payment
             'api_end_point',
             'integrator',
             'merchant_id_one',
-            'merchant_id_two'
+            'merchant_id_two',
+            'merchant_id_three'
         ]);
 
         $this->checkMethod([
