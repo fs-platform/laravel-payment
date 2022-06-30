@@ -259,18 +259,24 @@ trait PaymentParams
      *
      * @param string $local
      * @param array $paymentMethod
+     * @param bool $threeDSecure
      * @return $this
      * @Author: smile
      * @Date: 2021/6/27
      * @Time: 11:18
      */
-    public function setHostedCheckoutSpecificInput(string $local,array $paymentMethod) : self
+    public function setHostedCheckoutSpecificInput(string $local,array $paymentMethod,bool $threeDSecure) : self
     {
         if (is_null($this->hostedCheckoutSpecificInput)){
             $hostedCheckoutSpecificInput = new HostedCheckoutSpecificInput();
 
             $hostedCheckoutSpecificInput->locale = $local;
-            $hostedCheckoutSpecificInput->variant = config('payment.'.$this->environment.'.variant');
+
+            if ($threeDSecure) {
+                $hostedCheckoutSpecificInput->variant = config('payment.'.$this->environment.'.variant_two');
+            } else {
+                $hostedCheckoutSpecificInput->variant = config('payment.'.$this->environment.'.variant_one');
+            }
 
             $hostedCheckoutSpecificInput->paymentProductFilters = new PaymentProductFiltersHostedCheckout();
             $hostedCheckoutSpecificInput->paymentProductFilters->restrictTo = new PaymentProductFilter();

@@ -197,7 +197,8 @@ class Payment
             'api_secret',
             'api_end_point',
             'integrator',
-            'variant',
+            'variant_one',
+            'variant_two',
             'return_url',
             'url_domain',
             'merchant_id_one',
@@ -220,7 +221,7 @@ class Payment
         ]);
 
         //设置输出格式
-        $this->setHostedCheckoutSpecificInput($this->local,[$this->paymentMethod]);
+        $this->setHostedCheckoutSpecificInput($this->local,[$this->paymentMethod],$this->threeDSecure);
 
         return $this->paymentCheckoutService
             ->checkout(

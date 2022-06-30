@@ -30,7 +30,9 @@ return [
 
         'return_cancel_state' => env('PAYMENT_SANDBOX_RETURN_CANCEL_STATE',''),
 
-        'variant'             => env('PAYMENT_SANDBOX_VARIANT','')
+        'variant_one'         => env('PAYMENT_SANDBOX_VARIANT_ONE',''),
+
+        'variant_two'         => env('PAYMENT_SANDBOX_VARIANT_TWO','')
     ],
 
     'production' => [
@@ -52,12 +54,14 @@ return [
 
         'merchant_id_two'     => env('PAYMENT_PRODUCTION_MERCHANT_ID_TWO',''),
 
-        'merchant_id_three'   => env('PAYMENT_SANDBOX_MERCHANT_ID_THREE',''),
+        'merchant_id_three'   => env('PAYMENT_PRODUCTION_MERCHANT_ID_THREE',''),
 
         'show_result_page'    => env('PAYMENT_PRODUCTION_SHOW_RESULT_PAGE',''),
 
         'return_cancel_state' => env('PAYMENT_PRODUCTION_RETURN_CANCEL_STATE',''),
 
-        'variant'             => env('PAYMENT_PRODUCTION_VARIANT','')
+        'variant_one'         => env('PAYMENT_PRODUCTION_VARIANT_ONE',''),
+
+        'variant_two'         => env('PAYMENT_PRODUCTION_VARIANT_TWO','')
     ]
 ];
