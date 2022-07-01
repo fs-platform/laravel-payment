@@ -64,7 +64,7 @@ class PaymentCheckoutService
                 $threeDSecure = new ThreeDSecure();
                 $threeDSecure->authenticationAmount = $parameter['amountOfMoney'];
                 $threeDSecure->authenticationFlow = "browser";
-                $threeDSecure->challengeCanvasSize = "400x400";
+                $threeDSecure->challengeCanvasSize = "600x400";
                 $threeDSecure->challengeIndicator = "no-challenge-requested";
                 $threeDSecure->exemptionRequest = "low-value";
                 $threeDSecure->skipAuthentication = false;
