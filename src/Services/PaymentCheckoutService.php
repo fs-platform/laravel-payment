@@ -66,7 +66,7 @@ class PaymentCheckoutService
                 $threeDSecure->authenticationFlow = "browser";
                 $threeDSecure->challengeCanvasSize = "390x400";
                 $threeDSecure->challengeIndicator = "no-challenge-requested";
-                $threeDSecure->exemptionRequest = "low-value";
+                $threeDSecure->exemptionRequest = "automatic";
                 $threeDSecure->skipAuthentication = false;
 
                 $cardPaymentMethodSpecificInput = new CardPaymentMethodSpecificInput();
