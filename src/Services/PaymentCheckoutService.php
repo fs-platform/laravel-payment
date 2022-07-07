@@ -80,6 +80,9 @@ class PaymentCheckoutService
                 ->hostedcheckouts()
                 ->create($body);
 
+            Log::channel(config('payment.channel') ?: 'payment')
+                ->emergency('checkout 请求数据 :'.json_encode($body,JSON_FORCE_OBJECT));
+
             if (isset($response->RETURNMAC,$response->partialRedirectUrl) && !empty($response->RETURNMAC)  && !empty($response->partialRedirectUrl)) {
 
                 return payment_return_success('success',[
