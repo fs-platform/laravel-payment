@@ -71,6 +71,9 @@ class PaymentStatusService
                 ->hostedcheckouts()
                 ->get($hostedCheckoutId);
 
+            Log::channel(config('payment.channel') ?: 'payment')
+                ->info('status 响应数据 :'.json_encode($response,JSON_FORCE_OBJECT));
+
             if ($response->status == 'PAYMENT_CREATED'){
                 $payment  = $this->client($config)
                     ->merchant($merchantId)
@@ -120,12 +123,10 @@ class PaymentStatusService
         }catch (\Exception $exception){
             $message = $this->getExceptionMessage($exception);
 
-            if (!$exception instanceof BaseException) {
-                Log::channel(config('payment.channel') ?: 'payment')
-                    ->emergency('获取订单状态异常:'.$message);
+            Log::channel(config('payment.channel') ?: 'payment')
+                ->emergency('获取订单状态异常:'.$message);
 
-                report($exception);
-            }
+            report($exception);
 
             return payment_return_error($message);
         }
@@ -217,12 +218,10 @@ class PaymentStatusService
         }catch (\Exception $exception){
             $message = $this->getExceptionMessage($exception);
 
-            if (!$exception instanceof BaseException) {
-                Log::channel(config('payment.channel') ?: 'payment')
-                    ->emergency('自动审核 异常:'.$message);
+            Log::channel(config('payment.channel') ?: 'payment')
+                ->emergency('自动审核 异常:'.$message);
 
-                report($exception);
-            }
+            report($exception);
 
             throw new ApiException($message);
         }
@@ -289,12 +288,10 @@ class PaymentStatusService
         }catch (\Exception $exception){
             $message = $this->getExceptionMessage($exception);
 
-            if (!$exception instanceof BaseException) {
-                Log::channel(config('payment.channel') ?: 'payment')
-                    ->emergency('检索付款明细 异常:'.$message);
+            Log::channel(config('payment.channel') ?: 'payment')
+                ->emergency('检索付款明细 异常:'.$message);
 
-                report($exception);
-            }
+            report($exception);
 
             throw new ApiException($message);
         }
