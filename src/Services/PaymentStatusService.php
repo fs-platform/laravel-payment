@@ -260,7 +260,7 @@ class PaymentStatusService
             $body->directDebitPaymentMethodSpecificInput = $directDebitPaymentMethodSpecificInput;
             $body->order = $order;
 
-            $response = $this->client()
+            $response = $this->client($this->config)
                 ->merchant($this->merchantId)
                 ->payments()
                 ->approve($paymentId, $body);
