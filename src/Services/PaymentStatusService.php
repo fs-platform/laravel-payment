@@ -80,7 +80,7 @@ class PaymentStatusService
                     ->payments()
                     ->get($response->createdPaymentOutput->payment->id);
 
-                $statusCategory = $payment->statusOutput->statusCategory;
+                $statusCategory = $payment->statusOutput->statusCategory ?? '';
 
                 if ($statusCategory== 'PENDING_CONNECT_OR_3RD_PARTY' || $statusCategory == 'COMPLETED'){
                     return [
@@ -182,7 +182,7 @@ class PaymentStatusService
                 ->payments()
                 ->processchallenged($paymentId);
 
-            $statusCategory = $response->statusOutput->statusCategory;
+            $statusCategory = $response->statusOutput->statusCategory ?? '';
 
             if ($statusCategory == 'PENDING_CONNECT_OR_3RD_PARTY' || $statusCategory == 'COMPLETED'){
                 return [
@@ -265,7 +265,7 @@ class PaymentStatusService
                 ->payments()
                 ->approve($paymentId, $body);
 
-            $statusCategory = $response->payment->statusCategory;
+            $statusCategory = $response->payment->statusCategory ?? '';
 
             if ($statusCategory == 'PENDING_CONNECT_OR_3RD_PARTY' || $statusCategory =='COMPLETED'){
                 return [
