@@ -19,7 +19,7 @@
   "require": {
     "php": "^7.3",
     "illuminate/support":"^8.0",
-    "ingenico-epayments/connect-sdk-php": "^6.0"
+    "ingenico-epayments/connect-sdk-php": "6.33.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.0",

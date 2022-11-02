@@ -92,8 +92,6 @@ class PaymentStatusService
                     ];
                 } else if ($statusCategory == 'PENDING_MERCHANT'){
                     switch ($payment->status){
-                        case 'PENDING_FRAUD_APPROVAL':
-                            return $this->approveChallengedPayment($response->createdPaymentOutput->payment->id);
                         case 'PENDING_APPROVAL':
                             return $this->approvePayment($response->createdPaymentOutput->payment->id);
                         default:
@@ -264,6 +262,9 @@ class PaymentStatusService
                 ->merchant($this->merchantId)
                 ->payments()
                 ->approve($paymentId, $body);
+
+            Log::channel(config('payment.channel') ?: 'payment')
+                ->info('可疑订单审核 响应数据 :'.json_encode($response,JSON_FORCE_OBJECT));
 
             $statusCategory = $response->payment->statusCategory ?? '';
 
